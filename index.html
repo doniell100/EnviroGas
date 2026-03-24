@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Enviro Gas | Clean & Affordable LPG – Zimbabwe</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1a2c1e;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* Color palette - inspired by natural green & clean energy */
+    :root {
+      --green-deep: #1A4D2A;
+      --green-primary: #2C7A3E;
+      --green-light: #EAF7E6;
+      --green-soft: #D9F0D4;
+      --gray-dark: #2D3E2F;
+      --gray-mid: #4A5B4C;
+      --gray-light: #F9FBF7;
+      --accent-gold: #D6A22A;
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: white;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(2px);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      height: 58px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+
+    .brand-text {
+      font-weight: 800;
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+      color: var(--green-deep);
+    }
+    .brand-text span {
+      color: var(--green-primary);
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #2a3e2c;
+      transition: color 0.2s;
+      font-size: 1rem;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--green-primary);
+    }
+    .btn-outline-light {
+      background: transparent;
+      border: 2px solid var(--green-primary);
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      color: var(--green-primary);
+      transition: all 0.2s;
+    }
+    .btn-outline-light:hover {
+      background: var(--green-primary);
+      color: white;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--green-primary);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(44, 122, 62, 0.2);
+    }
+    .btn-primary:hover {
+      background: #135c2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(27, 94, 32, 0.2);
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #F5FDF2 0%, #ffffff 100%);
+      padding: 60px 0 40px;
+    }
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .hero-content {
+      flex: 1;
+    }
+    .hero-badge {
+      background: var(--green-light);
+      color: var(--green-deep);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #1a3c21;
+      margin-bottom: 20px;
+    }
+    .hero-highlight {
+      color: var(--green-primary);
+      border-bottom: 3px solid var(--accent-gold);
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--gray-mid);
+      max-width: 550px;
+      margin-bottom: 30px;
+    }
+    .price-badge-hero {
+      background: white;
+      border-radius: 48px;
+      padding: 8px 24px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 28px;
+      border: 1px solid #d9f0d4;
+    }
+    .price-current {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--green-deep);
+    }
+    .price-current small {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Section general */
+    section {
+      padding: 80px 0;
+    }
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #1c3a23;
+      text-align: center;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--gray-mid);
+      max-width: 700px;
+      margin: 0 auto 48px auto;
+      font-size: 1.1rem;
+    }
+
+    /* Mission Card */
+    .mission-card {
+      background: var(--green-light);
+      border-radius: 40px;
+      padding: 48px 40px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(44, 122, 62, 0.2);
+      max-width: 950px;
+      margin: 0 auto;
+    }
+    .mission-quote {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #1d4629;
+      quotes: "“" "”" "‘" "’";
+    }
+    .mission-quote::before {
+      content: "“";
+      font-size: 2.8rem;
+      color: var(--green-primary);
+    }
+    .mission-quote::after {
+      content: "”";
+      font-size: 2.8rem;
+      color: var(--green-primary);
+      vertical-align: top;
+    }
+
+    /* Stats & Distribution */
+    .stats-grid {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .stat-card {
+      background: white;
+      padding: 32px 28px;
+      border-radius: 32px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      min-width: 200px;
+      border: 1px solid #ecf7e9;
+      transition: 0.2s;
+    }
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--green-primary);
+    }
+    .stat-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* Pricing Card */
+    .pricing-block {
+      background: var(--gray-light);
+      border-radius: 48px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .price-big {
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--green-deep);
+    }
+    .price-unit {
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+    .gas-info {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .gas-info-item {
+      background: white;
+      padding: 12px 20px;
+      border-radius: 80px;
+      font-weight: 600;
+    }
+
+    /* Why choose us */
+    .features {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .feature {
+      background: white;
+      padding: 32px 24px;
+      border-radius: 32px;
+      flex: 1;
+      min-width: 240px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #eef5ea;
+    }
+    .feature i {
+      font-size: 2.5rem;
+      color: var(--green-primary);
+      margin-bottom: 20px;
+    }
+
+    /* Contact & Enquiry section */
+    .contact-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px;
+      background: white;
+      border-radius: 48px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .contact-info {
+      flex: 1;
+      background: var(--green-deep);
+      padding: 48px 36px;
+      color: white;
+      border-radius: 48px 0 0 48px;
+    }
+    .contact-info h3 {
+      font-size: 1.9rem;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .contact-detail {
+      margin: 28px 0;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .contact-detail i {
+      font-size: 1.6rem;
+      width: 32px;
+    }
+    .contact-detail a {
+      color: #eef5ea;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .contact-detail a:hover {
+      color: var(--accent-gold);
+      text-decoration: underline;
+    }
+    .enquiry-form {
+      flex: 1;
+      padding: 48px 36px;
+      background: white;
+    }
+    .enquiry-form h3 {
+      font-size: 1.9rem;
+      margin-bottom: 24px;
+      color: var(--green-deep);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 28px;
+      border: 1px solid #cfdfca;
+      font-family: inherit;
+      font-size: 1rem;
+      background: #fefef9;
+      transition: 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--green-primary);
+      box-shadow: 0 0 0 3px rgba(44, 122, 62, 0.2);
+    }
+    .map-placeholder {
+      margin-top: 32px;
+      background: #EAF4E5;
+      border-radius: 24px;
+      padding: 12px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+    .map-placeholder a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #112218;
+      color: #cbdcc6;
+      padding: 48px 0 24px;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+    .footer-address i, .footer-contact i {
+      width: 28px;
+      margin-right: 8px;
+    }
+    .footer-copyright {
+      text-align: center;
+      border-top: 1px solid #2b4530;
+      padding-top: 28px;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        padding: 0 24px;
+      }
+      .hero-content h1 {
+        font-size: 2.4rem;
+      }
+      .contact-info, .enquiry-form {
+        flex: auto;
+        border-radius: 32px;
+      }
+      .contact-wrapper {
+        flex-direction: column;
+      }
+      .contact-info {
+        border-radius: 32px;
+      }
+      .nav-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    @media (max-width: 550px) {
+      .section-title {
+        font-size: 1.9rem;
+      }
+      .mission-quote {
+        font-size: 1.3rem;
+      }
+    }
+    i.fa, i.far, i.fas {
+      margin-right: 6px;
+    }
+    .btn-order {
+      background: var(--accent-gold);
+      color: #1a2c1e;
+      border: none;
+    }
+    .btn-order:hover {
+      background: #c4911a;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrapper">
+    <div class="logo-area">
+      <!-- Logo image: replace with your actual logo file in images/ folder -->
+      <img src="images/my-photo.jpg" alt="Enviro Gas Logo – Clean and Affordable LPG" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x120?text=EnviroGas'; this.style.objectFit='contain';">
+      <div class="brand-text">Enviro<span>GAS</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#pricing">Price</a>
+      <a href="#contact">Contact</a>
+      <a href="#enquiry" class="btn-outline-light"><i class="fas fa-fire"></i> Enquire</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero / Home section -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-leaf"></i> Zimbabwe's trusted LPG partner</div>
+        <h1>Clean energy, <span class="hero-highlight">unmatched service</span> efficiency</h1>
+        <div class="price-badge-hero">
+          <span class="price-current">$1.56 <small>/ kg</small></span>
+          <span style="font-weight:500;">• today's LPG price</span>
+        </div>
+        <p class="hero-desc">Reliable cylinder refills, bulk gas supply, and nationwide delivery. Experience premium quality LPG with a local touch.</p>
+        <a href="#enquiry" class="btn-primary"><i class="fas fa-truck-fast"></i> Order gas now</a>
+        <a href="#contact" style="margin-left: 16px; text-decoration: none; font-weight: 600; color: var(--green-primary);"><i class="fas fa-phone-alt"></i> Call us</a>
+      </div>
+      <div class="hero-image" style="flex:0.8; text-align:center;">
+        <i class="fas fa-gas-pump" style="font-size: 12rem; color: #C9E9C0; opacity: 0.7;"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement (exactly as required) -->
+  <section id="about">
+    <div class="container">
+      <div class="mission-card">
+        <div class="mission-quote">
+          A gas company that prides itself in providing the highest of quality in LPG gas with unparalleled service efficiency for the value-discerning customer.
+        </div>
+        <p style="margin-top: 28px; font-weight: 500; color: #2d5a34;"><i class="fas fa-check-circle"></i> Quality first · Safety driven · Customer obsessed</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Distribution & stats: 50+ points + well established -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">50+</div>
+          <div class="stat-label"><i class="fas fa-map-marker-alt"></i> Distribution points</div>
+          <p style="font-size: 0.85rem; margin-top: 12px; color: #4a6741;">Nationwide • Well established</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label"><i class="fas fa-city"></i> Provincial coverage</div>
+          <p style="font-size: 0.85rem; margin-top: 12px;">Harare, Bulawayo, Mutare, Gweru...</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label"><i class="fas fa-headset"></i> Service support</div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 28px; background: #EFF9EA; padding: 12px; border-radius: 60px; max-width: 500px; margin-left: auto; margin-right: auto;"><i class="fas fa-trophy"></i> Well-established LPG network — serving Zimbabwe since 2012</p>
+    </div>
+  </section>
+
+  <!-- Pricing Section + LP Gas price $1.56 -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Current LPG gas price</h2>
+      <p class="section-sub">Transparent & competitive pricing — no hidden costs. Refill or exchange at any of our 50+ depots.</p>
+      <div class="pricing-block">
+        <div class="price-big">$1.56 <span class="price-unit">per kilogram</span></div>
+        <p style="margin: 16px 0 8px;"><i class="fas fa-weight-hanging"></i> LPG (Liquefied Petroleum Gas) – retail price per kg</p>
+        <div class="gas-info">
+          <div class="gas-info-item"><i class="fas fa-fire-extinguisher"></i> 5kg cylinder ≈ $7.80</div>
+          <div class="gas-info-item"><i class="fas fa-charging-station"></i> 10kg cylinder ≈ $15.60</div>
+          <div class="gas-info-item"><i class="fas fa-industry"></i> 48kg bulk cylinder available</div>
+        </div>
+        <div style="margin-top: 32px;">
+          <a href="#enquiry" class="btn-primary btn-order"><i class="fas fa-shopping-cart"></i> Request delivery / refill</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why choose us + extra value for Zimbabwean market -->
+  <section style="background: var(--gray-light);">
+    <div class="container">
+      <h2 class="section-title">Why Zimbabwe trusts Enviro Gas</h2>
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-certificate"></i>
+          <h3>Highest Quality LPG</h3>
+          <p>Premium grade gas with high calorific value, clean burn, and zero impurities.</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-tachometer-alt"></i>
+          <h3>Unparalleled Service Efficiency</h3>
+          <p>Fast response, same-day delivery in Harare & next-day nationwide.</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-hand-holding-usd"></i>
+          <h3>Value-Discerning Customer Focus</h3>
+          <p>Fair pricing, loyalty rewards, and transparent weighing at every point.</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-network-wired"></i>
+          <h3>50+ Distribution Points</h3>
+          <p>Well-established footprint across all provinces for easy access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact + Enquiry Section (combined) -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-wrapper" id="enquiry">
+        <!-- Left: address, phone, email, map link -->
+        <div class="contact-info">
+          <h3><i class="fas fa-map-pin"></i> Visit / Contact us</h3>
+          <div class="contact-detail">
+            <i class="fas fa-building"></i>
+            <div>
+              <strong>Head Office</strong><br>
+              Lot 1, Willow Bank, 19 Simon Mazorodze Road,<br>
+              Harare, Zimbabwe, 0000
+            </div>
+          </div>
+          <div class="contact-detail">
+            <i class="fas fa-phone-alt"></i>
+            <div>
+              <strong>Call / WhatsApp</strong><br>
+              <a href="tel:+263714733304">+263 71 473 3304</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <strong>Email</strong><br>
+              <a href="mailto:info@envirogas.co.zw">info@envirogas.co.zw</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Business Hours</strong><br>
+              Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 2:00 PM
+            </div>
+          </div>
+          <div class="map-placeholder">
+            <i class="fas fa-location-dot"></i> <a href="https://maps.google.com/?q=Lot+1+Willow+Bank+19+Simon+Mazorodze+Road+Harare+Zimbabwe" target="_blank" style="color:white; text-decoration:underline;">Get directions on Google Maps →</a>
+          </div>
+        </div>
+
+        <!-- Right: Enquiry Form -->
+        <div class="enquiry-form">
+          <h3><i class="fas fa-pen-alt"></i> Send enquiry</h3>
+          <p style="margin-bottom: 24px; color: #4f6b49;">Request a quote, delivery info, or any LPG question — we reply within hours.</p>
+          <form id="gasEnquiryForm">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Full name *" required>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="Email address *" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="phone" placeholder="Phone number (optional)">
+            </div>
+            <div class="form-group">
+              <textarea rows="4" id="message" placeholder="Tell us about your LPG needs (cylinder size, delivery location, etc.) *" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%; justify-content: center;"><i class="fas fa-paper-plane"></i> Submit enquiry</button>
+            <p style="font-size: 0.75rem; margin-top: 16px; text-align: center;">Our team will get back to you with tailored gas solutions</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4 style="color: white; margin-bottom: 16px;">Enviro Gas</h4>
+        <p>Clean & Affordable LPG for homes, restaurants, and industries across Zimbabwe.</p>
+      </div>
+      <div class="footer-address">
+        <h4 style="color: white; margin-bottom: 12px;"><i class="fas fa-map-marker-alt"></i> Address</h4>
+        <p>Lot 1, Willow Bank, 19 Simon Mazorodze Road,<br> Harare, Zimbabwe, 0000</p>
+      </div>
+      <div class="footer-contact">
+        <h4 style="color: white; margin-bottom: 12px;"><i class="fas fa-headset"></i> Contact</h4>
+        <p><i class="fas fa-phone"></i> <a href="tel:+263714733304" style="color:#cbdcc6;">+263 71 473 3304</a><br>
+        <i class="fas fa-envelope"></i> <a href="mailto:info@envirogas.co.zw" style="color:#cbdcc6;">info@envirogas.co.zw</a></p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 Enviro Gas – Zimbabwe's premier LPG provider. All rights reserved. | Clean energy for a sustainable future.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Enquiry form handling (frontend simulation with success alert)
+  const form = document.getElementById('gasEnquiryForm');
+  if(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message) {
+        alert('❌ Please fill in all required fields (name, email, message).');
+        return;
+      }
+      if(!email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      // Simulate submission success
+      alert(`✅ Thank you ${name}, your enquiry has been received!\n\nOne of our gas specialists will reply within 24 hours at ${email}.\n\nCall us directly: +263 71 473 3304 for urgent orders.`);
+      form.reset();
+    });
+  }
+
+  // smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if(targetId === "#" || targetId === "") return;
+      const targetElement = document.querySelector(targetId);
+      if(targetElement) {
+        e.preventDefault();
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
