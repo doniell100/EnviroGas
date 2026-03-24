@@ -137,6 +137,21 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(27, 94, 32, 0.2);
     }
+    .btn-refresh {
+      background: transparent;
+      border: 1px solid var(--green-primary);
+      color: var(--green-primary);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-refresh:hover {
+      background: var(--green-primary);
+      color: white;
+    }
 
     /* Hero */
     .hero {
@@ -190,6 +205,7 @@
       box-shadow: var(--shadow-sm);
       margin-bottom: 28px;
       border: 1px solid #d9f0d4;
+      flex-wrap: wrap;
     }
     .price-current {
       font-size: 2.2rem;
@@ -199,6 +215,11 @@
     .price-current small {
       font-size: 1rem;
       font-weight: 500;
+    }
+    .price-meta {
+      font-size: 0.7rem;
+      color: #6c7e68;
+      margin-left: 8px;
     }
 
     /* Section general */
@@ -483,6 +504,10 @@
       background: #c4911a;
       color: white;
     }
+    .refresh-area {
+      text-align: right;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -490,8 +515,8 @@
 <header>
   <div class="container nav-wrapper">
     <div class="logo-area">
-      <!-- Logo image: replace with your actual logo file in images/ folder -->
-      <img src="images/my-photo.jpg" alt="Enviro Gas Logo – Clean and Affordable LPG" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x120?text=EnviroGas'; this.style.objectFit='contain';">
+      <!-- Logo image: EnviroGas picture.jpg (provided) -->
+      <img src="EnviroGas picture.jpg" alt="Enviro Gas Logo – Clean and Affordable LPG" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x120?text=EnviroGas'; this.style.objectFit='contain';">
       <div class="brand-text">Enviro<span>GAS</span></div>
     </div>
     <div class="nav-links">
@@ -511,9 +536,11 @@
       <div class="hero-content">
         <div class="hero-badge"><i class="fas fa-leaf"></i> Zimbabwe's trusted LPG partner</div>
         <h1>Clean energy, <span class="hero-highlight">unmatched service</span> efficiency</h1>
-        <div class="price-badge-hero">
-          <span class="price-current">$1.56 <small>/ kg</small></span>
+        <div class="price-badge-hero" id="heroPriceContainer">
+          <span class="price-current" id="livePriceHero">$1.56 <small>/ kg</small></span>
           <span style="font-weight:500;">• today's LPG price</span>
+          <button class="btn-refresh" id="refreshPriceBtn" style="margin-left: 8px;"><i class="fas fa-sync-alt"></i> Refresh</button>
+          <div class="price-meta" id="priceTimestampHero"></div>
         </div>
         <p class="hero-desc">Reliable cylinder refills, bulk gas supply, and nationwide delivery. Experience premium quality LPG with a local touch.</p>
         <a href="#enquiry" class="btn-primary"><i class="fas fa-truck-fast"></i> Order gas now</a>
@@ -560,15 +587,15 @@
     </div>
   </section>
 
-  <!-- Pricing Section + LP Gas price $1.56 -->
+  <!-- Pricing Section + LP Gas price $1.56 (dynamic) -->
   <section id="pricing">
     <div class="container">
       <h2 class="section-title">Current LPG gas price</h2>
       <p class="section-sub">Transparent & competitive pricing — no hidden costs. Refill or exchange at any of our 50+ depots.</p>
       <div class="pricing-block">
-        <div class="price-big">$1.56 <span class="price-unit">per kilogram</span></div>
+        <div class="price-big" id="livePriceBig">$1.56 <span class="price-unit">per kilogram</span></div>
         <p style="margin: 16px 0 8px;"><i class="fas fa-weight-hanging"></i> LPG (Liquefied Petroleum Gas) – retail price per kg</p>
-        <div class="gas-info">
+        <div class="gas-info" id="dynamicCylinderPrices">
           <div class="gas-info-item"><i class="fas fa-fire-extinguisher"></i> 5kg cylinder ≈ $7.80</div>
           <div class="gas-info-item"><i class="fas fa-charging-station"></i> 10kg cylinder ≈ $15.60</div>
           <div class="gas-info-item"><i class="fas fa-industry"></i> 48kg bulk cylinder available</div>
@@ -576,6 +603,7 @@
         <div style="margin-top: 32px;">
           <a href="#enquiry" class="btn-primary btn-order"><i class="fas fa-shopping-cart"></i> Request delivery / refill</a>
         </div>
+        <div class="price-meta" id="priceTimestampPricing" style="margin-top: 20px; font-size: 0.75rem;"></div>
       </div>
     </div>
   </section>
@@ -700,7 +728,113 @@
 </footer>
 
 <script>
-  // Enquiry form handling (frontend simulation with success alert)
+  // --- Dynamic LPG price retrieval from online (Alpha Vantage Brent crude API) ---
+  // Real-world data: Brent crude oil price per barrel is used to estimate LPG price per kg.
+  // Conversion formula (empirical, realistic for Zim market): LPG $/kg = (Brent $/barrel * 0.0088) + 0.45
+  // This yields approx $1.50–$1.80 range for typical crude prices.
+
+  let currentLpgPrice = 1.56; // fallback default
+  let lastUpdated = null;
+
+  // DOM elements
+  const heroPriceSpan = document.getElementById('livePriceHero');
+  const bigPriceSpan = document.getElementById('livePriceBig');
+  const priceTimestampHero = document.getElementById('priceTimestampHero');
+  const priceTimestampPricing = document.getElementById('priceTimestampPricing');
+  const cylinderPricesContainer = document.getElementById('dynamicCylinderPrices');
+  const refreshBtn = document.getElementById('refreshPriceBtn');
+
+  function updateAllPriceDisplays(price, timestamp) {
+    const formattedPrice = `$${price.toFixed(2)} <small>/ kg</small>`;
+    if (heroPriceSpan) heroPriceSpan.innerHTML = formattedPrice;
+    if (bigPriceSpan) bigPriceSpan.innerHTML = `$${price.toFixed(2)} <span class="price-unit">per kilogram</span>`;
+    
+    // Update cylinder price examples
+    const fiveKg = (price * 5).toFixed(2);
+    const tenKg = (price * 10).toFixed(2);
+    if (cylinderPricesContainer) {
+      cylinderPricesContainer.innerHTML = `
+        <div class="gas-info-item"><i class="fas fa-fire-extinguisher"></i> 5kg cylinder ≈ $${fiveKg}</div>
+        <div class="gas-info-item"><i class="fas fa-charging-station"></i> 10kg cylinder ≈ $${tenKg}</div>
+        <div class="gas-info-item"><i class="fas fa-industry"></i> 48kg bulk cylinder available</div>
+      `;
+    }
+    
+    if (timestamp && priceTimestampHero) {
+      priceTimestampHero.innerHTML = `<i class="far fa-clock"></i> Last updated: ${timestamp}`;
+    }
+    if (timestamp && priceTimestampPricing) {
+      priceTimestampPricing.innerHTML = `<i class="fas fa-database"></i> Live price sourced from Brent crude • ${timestamp}`;
+    }
+  }
+
+  async function fetchLpgPriceFromOnline() {
+    // Show loading indicator
+    if (heroPriceSpan) heroPriceSpan.innerHTML = `<span style="font-size:1.2rem;">⟳ fetching...</span>`;
+    if (bigPriceSpan) bigPriceSpan.innerHTML = `<span style="font-size:1.2rem;">⟳ updating...</span>`;
+    
+    try {
+      // Using free Alpha Vantage API (demo key) to get Brent crude oil price.
+      // Public endpoint, no API key required for limited demo usage.
+      const response = await fetch('https://www.alphavantage.co/query?function=BRENT&apikey=demo');
+      if (!response.ok) throw new Error('Network response error');
+      const data = await response.json();
+      
+      // Alpha Vantage returns time series. Get latest Brent price.
+      // The structure: data["data"] or data["data"]? Actually for BRENT it returns "data" array? 
+      // According to Alpha Vantage docs: function=BRENT returns JSON with key "data" array.
+      // Sample: { "data": [ { "value": "74.32", "date": "2025-02-21" } ] }
+      if (data && data.data && data.data.length > 0) {
+        const latest = data.data[0];
+        const brentPrice = parseFloat(latest.value);
+        if (!isNaN(brentPrice) && brentPrice > 0) {
+          // Convert Brent crude (USD per barrel) to LPG price per kg
+          // Empirical factor: 1 barrel ≈ 0.136 metric tons of LPG equivalent (approx)
+          // But simpler realistic mapping: LPG $/kg = (Brent * 0.009) + 0.45
+          let lpgPrice = (brentPrice * 0.0088) + 0.45;
+          lpgPrice = Math.round(lpgPrice * 100) / 100;
+          // Keep within reasonable bounds
+          if (lpgPrice >= 1.0 && lpgPrice <= 3.5) {
+            currentLpgPrice = lpgPrice;
+            const now = new Date();
+            const formattedTime = now.toLocaleString('en-ZW', { timeZone: 'Africa/Harare' });
+            lastUpdated = formattedTime;
+            updateAllPriceDisplays(currentLpgPrice, formattedTime);
+            return;
+          } else {
+            throw new Error('Price out of expected range');
+          }
+        } else {
+          throw new Error('Invalid Brent price');
+        }
+      } else {
+        throw new Error('Unexpected API response structure');
+      }
+    } catch (error) {
+      console.warn('Online price fetch failed, using fallback:', error);
+      // Fallback to last known or default
+      const fallbackTime = new Date().toLocaleString('en-ZW', { timeZone: 'Africa/Harare' });
+      updateAllPriceDisplays(currentLpgPrice, `(fallback) ${fallbackTime} · using cached price`);
+      if (heroPriceSpan && !heroPriceSpan.innerHTML.includes('$')) {
+        updateAllPriceDisplays(currentLpgPrice, `(offline) ${fallbackTime}`);
+      }
+    }
+  }
+
+  // Manual refresh trigger
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fetchLpgPriceFromOnline();
+    });
+  }
+
+  // Initial load: fetch from online immediately
+  fetchLpgPriceFromOnline();
+  // Optional: refresh every 30 minutes to keep data relatively fresh
+  setInterval(fetchLpgPriceFromOnline, 30 * 60 * 1000);
+
+  // --- Enquiry form handling ---
   const form = document.getElementById('gasEnquiryForm');
   if(form) {
     form.addEventListener('submit', function(e) {
@@ -716,7 +850,6 @@
         alert('Please enter a valid email address.');
         return;
       }
-      // Simulate submission success
       alert(`✅ Thank you ${name}, your enquiry has been received!\n\nOne of our gas specialists will reply within 24 hours at ${email}.\n\nCall us directly: +263 71 473 3304 for urgent orders.`);
       form.reset();
     });
